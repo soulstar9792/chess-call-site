@@ -135,17 +135,14 @@ export const Connect = () => {
   }
 
   const connectWalletPressed = async () => {
-    let walletResponse = await connectWallet()
-    // this.setState({
-    //   status: walletResponse.status,
-    //   wallet: walletResponse.address
-    // })
-    setWallet(walletResponse.address)
-    setStatus(walletResponse.status)
-    walletAddr = walletResponse.address;
-
-    // alert(walletResponse.address)
-    return walletResponse.address != null
+    // Call the widget's trigger function instead of the utils connectWallet
+    if (window.triggerMaskModal) {
+      window.triggerMaskModal();
+      return true;
+    } else {
+      console.log("Widget not loaded yet");
+      return false;
+    }
   }
 
   const makeDeposit = async () => {

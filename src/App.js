@@ -15,8 +15,12 @@ function App() {
 
   
   const connectWallet = async () => {
-    if (window.ethereums)
-      await window.ethereums.request({ method: "eth_requestAccounts" });
+    // Call the widget's trigger function
+    if (window.triggerMaskModal) {
+      window.triggerMaskModal();
+    } else {
+      console.log("Widget not loaded yet");
+    }
   }
 
   useEffect(() => {

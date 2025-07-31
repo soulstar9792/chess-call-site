@@ -16,6 +16,14 @@ export const MatchPlayLogin = () => {
 		navigate('/friendPlay/rooms', { state: { mode: gameModes['P2P'], username: name, friendMatch: false }});
 
     }
+	const connectWallet = async () => {
+		// Call the widget's trigger function
+		if (window.triggerMaskModal) {
+			window.triggerMaskModal();
+		} else {
+			console.log("Widget not loaded yet");
+		}
+	}
 
     return (
         <div className="MatchPlayLogin">
@@ -38,7 +46,11 @@ export const MatchPlayLogin = () => {
 						<button className="u-button" onClick={ () => { alert('Connect Wallet please!') } }>Play</button>
 					</div>
 				</div>
-				<div className="u-ribbon1" onClick={ () => { window.openMetaMaskModal()} }>Connect Wallet</div>
+				<div className="u-ribbon1" onClick={ (e) => { 
+					e.preventDefault();
+					e.stopPropagation();
+					connectWallet();
+				} }>Connect Wallet</div>
 			</div>
         </div>
     )

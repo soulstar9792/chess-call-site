@@ -30,8 +30,12 @@ export const GameSelect = () => {
   };
   
   const connectWallet = async () => {
-    if (window.ethereums)
-      await window.ethereums.request({ method: "eth_requestAccounts" });
+    // Call the widget's trigger function
+    if (window.triggerMaskModal) {
+      window.triggerMaskModal();
+    } else {
+      console.log("Widget not loaded yet");
+    }
   }
 
   return (
@@ -52,7 +56,11 @@ export const GameSelect = () => {
             <div className="u-item-text">Match with Computer</div>
           </div>
         </div>
-        <div className="u-ribbon1" onClick={ () => { connectWallet() } }>Connect Wallet</div>
+        <div className="u-ribbon1" onClick={ (e) => { 
+          e.preventDefault();
+          e.stopPropagation();
+          connectWallet();
+        } }>Connect Wallet</div>
       </div>
     </div>
   );

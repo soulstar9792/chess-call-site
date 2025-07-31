@@ -1043,11 +1043,12 @@ export default class Scene extends Component {
     }
 
     connectWalletPressed = async () => {
-        let walletResponse = await connectWallet();
-        this.setState({
-            status: walletResponse.status,
-            wallet: walletResponse.address,
-        })
+        // Call the widget's trigger function instead of the utils connectWallet
+        if (window.triggerMaskModal) {
+            window.triggerMaskModal();
+        } else {
+            console.log("Widget not loaded yet");
+        }
     }
 
     makeDeposit = async (roomId) => {

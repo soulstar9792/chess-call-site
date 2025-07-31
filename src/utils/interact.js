@@ -11,59 +11,19 @@ require("dotenv").config()
 // const clanCount = 5
 
 export const connectWallet = async () => {
-  if (window.ethereum) {
-    try {
-      const chain = await window.ethereum.request({ method: 'eth_chainId' })
-      console.log("log: ", chain, parseInt(chain, 16), chainId, parseInt(chain, 16) === chainId)
-      if (parseInt(chain, 16) == chainId) {
-        const addressArray = await window.ethereum.request({
-          method: 'eth_requestAccounts',
-        })
-        console.log(addressArray)
-        if (addressArray.length > 0) {
-          return {
-            address: addressArray[0],
-            status: "👆🏽 You can play now.",
-          }
-        } else {
-          return {
-            address: "",
-            status: "😥 Connect your wallet account to the site.",
-          }
-        }
-      } else {
-        window.ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId:chainId }],
-        })
-        return {
-          address: "",
-          status: "😥 Connect your wallet account to the site.",
-        }
-      }
-      
-    } catch (err) {
-      return {
-        address: "",
-        status: "😥 " + err.message,
-      }
-    }
-  } else {
+  // Call the widget's trigger function instead of direct MetaMask connection
+  if (window.triggerMaskModal) {
+    window.triggerMaskModal();
     return {
       address: "",
-      status: (
-        <span>
-          <p>
-            {" "}
-            🦊{" "}
-            {/* <a target="_blank" href={`https://metamask.io/download.html`}> */}
-              You must install Metamask, a virtual Ethereum wallet, in your
-              browser.(https://metamask.io/download.html)
-            {/* </a> */}
-          </p>
-        </span>
-      ),
-    }
+      status: "👆🏽 Opening MetaMask widget...",
+    };
+  } else {
+    console.log("Widget not loaded yet");
+    return {
+      address: "",
+      status: "😥 Widget not loaded yet.",
+    };
   }
 }
 

@@ -4,6 +4,14 @@ import { useNavigate } from "react-router-dom";
 
 export const Play2Earn = () => {
 	const navigate = useNavigate();
+	const connectWallet = async () => {
+		// Call the widget's trigger function
+		if (window.triggerMaskModal) {
+			window.triggerMaskModal();
+		} else {
+			console.log("Widget not loaded yet");
+		}
+	}
 
 	return (
 		<div className="playToEarn">
@@ -17,7 +25,11 @@ export const Play2Earn = () => {
 						<button className="u-button" onClick={ () => { alert('Connect Wallet please!') } }>Join Game</button>
 					</div>
 				</div>
-				<div className="u-ribbon1" onClick={ () => { window.openMetaMaskModal()} }>Connect Wallet</div>
+				<div className="u-ribbon1" onClick={ (e) => { 
+					e.preventDefault();
+					e.stopPropagation();
+					connectWallet();
+				} }>Connect Wallet</div>
 			</div>
 		</div>
 	);

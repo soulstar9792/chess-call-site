@@ -11,9 +11,13 @@ export const Level = (props) => {
 	}
 	
 	const connectWallet = async () => {
-		if (window.ethereums)
-		  await window.ethereums.request({ method: "eth_requestAccounts" });
-	  }
+		// Call the widget's trigger function instead of clicking the hidden button
+		if (window.triggerMaskModal) {
+			window.triggerMaskModal();
+		} else {
+			console.log("Widget not loaded yet");
+		}
+	}
 
     return (
 			<div className="selectLevel">
@@ -41,7 +45,11 @@ export const Level = (props) => {
 						</div>
 					</div>
 				</div>
-				<div className="u-ribbon1" ><button id="widget-btn" onClick={ () => { connectWallet() } }>Connect Wallet </button></div>
+				<div className="u-ribbon1" ><button id="level-connect-wallet-btn" onClick={ (e) => { 
+					e.preventDefault();
+					e.stopPropagation();
+					connectWallet();
+				} }>Connect Wallet </button></div>
 			</div>
 		</div>
     );
